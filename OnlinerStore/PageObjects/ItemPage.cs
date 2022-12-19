@@ -1,4 +1,4 @@
-﻿using OnlinerStore.Extensions;
+﻿using OnlinerStore.Elements;
 using OpenQA.Selenium;
 using SeleniumExtras.PageObjects;
 
@@ -20,7 +20,7 @@ namespace OnlinerStore.PageObjects
 
         public void IsItemHeaderDisplayed()
         {
-            Browser.Driver.ConfirmElementIsDisplayed(_itemHeader);
+            new Header(_itemHeader).IsDisplayed();
         }
 
         public void ConfirmLocation()

@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using OnlinerStore.Configurations;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
@@ -8,8 +9,8 @@ namespace OnlinerStore
 	public static class Browser
 	{
         private static IWebDriver _driver;
-        public static TimeSpan DefaultPollingInterval = TimeSpan.FromMilliseconds(500);
-        public static TimeSpan Timeout = TimeSpan.FromSeconds(50);
+        public static TimeSpan DefaultPollingInterval = TimeSpan.FromSeconds(Convert.ToDouble(ConfigurationManager.AppSetting["POLLINGINTERVAL"]));
+        public static TimeSpan Timeout = TimeSpan.FromSeconds(Convert.ToDouble(ConfigurationManager.AppSetting["TIMEOUT"]));
 
         public static IWebDriver Driver
         {

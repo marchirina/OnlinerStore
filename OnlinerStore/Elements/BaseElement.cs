@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
+using OnlinerStore.Configurations;
 
 namespace OnlinerStore.Elements
 {
@@ -7,8 +8,9 @@ namespace OnlinerStore.Elements
 	{
         private readonly IWebElement _element;
         private readonly By _locator;
-        public static TimeSpan DefaultPollingInterval = TimeSpan.FromMilliseconds(500);
-        public static TimeSpan Timeout = TimeSpan.FromSeconds(500);
+        public static TimeSpan DefaultPollingInterval = TimeSpan.FromMilliseconds(Convert.ToDouble
+            (ConfigurationManager.AppSetting["POLLINGINTERVAL"]));
+        public static TimeSpan Timeout = TimeSpan.FromSeconds(Convert.ToDouble(ConfigurationManager.AppSetting["TIMEOUT"]));
         private IWebElement Element => _element ?? Browser.Driver.FindElements(_locator).FirstOrDefault();
 
         protected BaseElement(By locator)

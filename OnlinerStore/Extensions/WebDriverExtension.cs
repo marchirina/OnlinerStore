@@ -19,21 +19,6 @@ namespace OnlinerStore.Extensions
             WaitForElementIsPresent(driver,by);
             return driver.FindElement(by);
         }
-
-        public static void ConfirmElementIsDisplayed(this IWebDriver driver, IWebElement element)
-        {
-            var wait = new WebDriverWait(driver, Timeout);
-            wait.IgnoreExceptionTypes(typeof(StaleElementReferenceException));
-            try
-            {
-                wait.Until(d => element.Displayed);
-            }
-            catch (WebDriverTimeoutException exception)
-            {
-               
-                throw new WebDriverTimeoutException($"The element was not displayed during {Timeout} seconds", exception.InnerException ?? exception);
-            }
-        }
     }
 }
 

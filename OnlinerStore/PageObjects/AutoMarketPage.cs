@@ -41,7 +41,7 @@ namespace OnlinerStore.PageObjects
 
         public void IsCarRatingDisplayed()
         {
-           Browser.Driver.ConfirmElementIsDisplayed(_modelRatingValue);
+            new Header(_modelRatingValue).IsDisplayed();
         }
 
         public void CheckRatingValue()

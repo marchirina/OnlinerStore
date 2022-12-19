@@ -1,3 +1,5 @@
 ﻿{
-  "URL": "https://www.onliner.by"
+  "URL": "https://www.onliner.by",
+  "TIMEOUT": "50",
+  "POLLINGINTERVAL": "500"
 }
