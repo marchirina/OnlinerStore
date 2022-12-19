@@ -9,7 +9,8 @@ namespace OnlinerStore
 	public static class Browser
 	{
         private static IWebDriver _driver;
-        public static TimeSpan DefaultPollingInterval = TimeSpan.FromSeconds(Convert.ToDouble(ConfigurationManager.AppSetting["POLLINGINTERVAL"]));
+        public static TimeSpan DefaultPollingInterval = TimeSpan.FromMilliseconds(Convert.ToDouble
+            (ConfigurationManager.AppSetting["POLLINGINTERVAL"]));
         public static TimeSpan Timeout = TimeSpan.FromSeconds(Convert.ToDouble(ConfigurationManager.AppSetting["TIMEOUT"]));
 
         public static IWebDriver Driver
