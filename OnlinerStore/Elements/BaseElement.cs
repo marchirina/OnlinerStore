@@ -4,12 +4,10 @@ using OnlinerStore.Configurations;
 
 namespace OnlinerStore.Elements
 {
-    public abstract class BaseElement   
+    public abstract class BaseElement
 	{
         private readonly IWebElement _element;
         private readonly By _locator;
-        public static TimeSpan DefaultPollingInterval = TimeSpan.FromMilliseconds(Convert.ToDouble
-            (ConfigurationManager.AppSetting["POLLINGINTERVAL"]));
         public static TimeSpan Timeout = TimeSpan.FromSeconds(Convert.ToDouble(ConfigurationManager.AppSetting["TIMEOUT"]));
         private IWebElement Element => _element ?? Browser.Driver.FindElements(_locator).FirstOrDefault();
 
@@ -34,22 +32,14 @@ namespace OnlinerStore.Elements
             });
         }
 
-        public void Click()
-        {
-            Browser.Wait().Until(waiting =>
+        public void Click() => Browser
+            .Wait(exceptionTypes: new[] { typeof(ElementNotInteractableException), typeof(ElementClickInterceptedException), typeof(StaleElementReferenceException) })
+            .Until(waiting =>
             {
-                try
-                {
-                    Element.Click();
+                Element.Click();
 
-                    return true;
-                }
-                catch (Exception)
-                {
-                    return false;
-                }
+                return true;
             });
-        }
 
         public void WaitForElementIsDisplayed(int? timeout = null) =>
             Browser.Wait(timeout == null ? Timeout : TimeSpan.FromMilliseconds((int)timeout))
@@ -68,6 +58,26 @@ namespace OnlinerStore.Elements
                 return false;
             }
         }
+
+        public string Text => Element.Text;
+
+        public int Count() => IsDisplayed() ? Browser.Driver.FindElements(_locator).Count : 0;
+
+        public IWebElement GetElement()
+        {
+            WaitForElementIsDisplayed();
+
+            return Element;
+        }
+
+        public void ScrollToElement() =>
+            Browser.ExecuteJavaScript("arguments[0].scrollIntoView({block: 'center'});", Element);
+
+        public void SwitchToPopupAndClick(IWebElement element)
+        {
+            Browser.Driver.SwitchTo().Frame(element);
+            Element.Click();
+            Browser.Driver.SwitchTo().DefaultContent();
+        }
     }
 }
-

@@ -7,7 +7,6 @@ namespace OnlinerStore.TestCases
         [SetUp]
         public void SetUpTest()
         {
-            Browser.InitializeBrowser("Chrome");
             Browser.OpenFullScreen();
             Browser.OpenApplication(ConfigurationManager.AppSetting["URL"]);
             Browser.Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(8);
@@ -20,4 +19,3 @@ namespace OnlinerStore.TestCases
         }
     }
 }
-

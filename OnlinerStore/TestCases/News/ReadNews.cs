@@ -8,8 +8,7 @@ namespace OnlinerStore.TestCases.News
         public void ReadLatestTechNews()
         {
             Pages.Main.SelectLatestTechnicalNews();
-            Pages.Main.IsLatestTechNewsSectionDisplayed();
+            Assert.IsTrue(Pages.Main.IsLatestTechNewsSectionDisplayed());
         }
     }
 }
-

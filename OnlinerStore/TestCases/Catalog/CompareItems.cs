@@ -16,4 +16,3 @@ namespace OnlinerStore.TestCases.Catalog
         }
     }
 }
-

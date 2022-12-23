@@ -10,7 +10,7 @@ namespace OnlinerStore.TestCases.AutoMarket
             Pages.Main.OpenAutoMarketPage();
             Pages.AutoMarket.SelectBrandName("Toyota");
             Pages.AutoMarket.SelectModelName("RAV4");
-            Pages.AutoMarket.IsCarRatingDisplayed();
+            Assert.IsTrue(Pages.AutoMarket.IsCarRatingDisplayed);
             Pages.AutoMarket.CheckRatingValue();
         }
     }

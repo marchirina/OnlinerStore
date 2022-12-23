@@ -1,30 +1,25 @@
-﻿using OnlinerStore.Helpers;
+﻿using OnlinerStore.Elements;
 using OpenQA.Selenium;
-using SeleniumExtras.PageObjects;
 
 namespace OnlinerStore.PageObjects
 {
 	public class ServicesPage
 	{
-        [FindsBy(How = How.XPath, Using = "//span[contains(text(),'Как здесь все устроено?')]")]
-        private IWebElement _howItWorksButton;
-
-        [FindsBy(How = How.XPath, Using = "//div[@class='service-faq']")]
-        private IWebElement _faqBlock;
+        private static Button HowItWorksButton => new Button(By.XPath("//span[contains(text(),'Как здесь все устроено?')]"));
+        private static TextElement FaqBlock => new TextElement(By.XPath("//div[@class='service-faq']"));
 
         public void OpenHowItWorksPage()
         {
-            _howItWorksButton.Click();
+            HowItWorksButton.Click();
         }
 
         public void OpenAnswerToTheQuestion(string question)
         {
-            JavaScriptHelper.ScrollToElement(_faqBlock);
-            Browser.Driver.FindElement(By.XPath($"//div[@class='service-faq__header']/a[text()='{question}']")).Click();
+            FaqBlock.ScrollToElement();
+            new Header(By.XPath($"//div[@class='service-faq__header']/a[text()='{question}']")).Click();
         }
 
         public bool IsAnswerDisplayed(string question) =>
-            Browser.Driver.FindElement(By.XPath($"//div[contains(@class,'service-faq__item_opened')]//a[text()='{question}']")).Displayed;
+            new TextElement(By.XPath($"//div[contains(@class,'service-faq__item_opened')]//a[text()='{question}']")).IsDisplayed();
     }
 }
-

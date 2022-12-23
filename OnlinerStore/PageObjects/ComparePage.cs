@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OnlinerStore.Elements;
 
 namespace OnlinerStore.PageObjects
 {
@@ -6,11 +7,10 @@ namespace OnlinerStore.PageObjects
     {
         public bool IsFirstItemBetter()
         {
-            var firstItemSpec = Browser.Driver.FindElements(By.XPath("//td[3][contains (@class,'cell_accent')]")).Count;
-            var secondItemSpec = Browser.Driver.FindElements(By.XPath("//td[4][contains (@class,'cell_accent')]")).Count;
+            var firstItemSpec = new TextElement(By.XPath("//td[3][contains (@class,'cell_accent')]")).Count();
+            var secondItemSpec = new TextElement(By.XPath("//td[4][contains (@class,'cell_accent')]")).Count();
 
             return firstItemSpec > secondItemSpec;
         }
     }
 }
-

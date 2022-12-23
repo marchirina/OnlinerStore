@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OnlinerStore.Elements;
 
 namespace OnlinerStore.PageObjects
 {
@@ -6,8 +7,7 @@ namespace OnlinerStore.PageObjects
 	{
         public void OpenForumTheadPage(string threadName)
         {
-            Browser.Driver.FindElement(By.XPath($"//a[contains(text(),'{threadName}')]")).Click();
+            new TextElement(By.XPath($"//a[contains(text(),'{threadName}')]")).Click();
         }
     }
 }
-

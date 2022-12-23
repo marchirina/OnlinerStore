@@ -14,8 +14,7 @@ namespace OnlinerStore.TestCases.Catalog
             Pages.Item.AddItemInBasketForFirstExpandedShop();
             Pages.Item.MoveToBasketPage();
             Pages.Basket.OpenCheckoutPage();
-            Pages.Checkout.IsPaymentButtonDisplayed();
+            Assert.IsTrue(Pages.Checkout.IsPaymentButtonDisplayed);
         }
     }
 }
-

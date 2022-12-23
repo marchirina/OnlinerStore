@@ -1,13 +1,14 @@
 ﻿using OpenQA.Selenium;
+using OnlinerStore.Elements;
 
 namespace OnlinerStore.PageObjects
 {
 	public class ThreadPage
 	{
         public bool IsThreadTitleDisplayed(string titleName) =>
-            Browser.Driver.FindElement(By.XPath($"//h1[@title='{titleName}']" )).Displayed;
+            new Header(By.XPath($"//h1[@title='{titleName}']" )).IsDisplayed();
 
         public bool IsPinnedMessageDisplayed(string message) =>
-            Browser.Driver.FindElement(By.XPath($"//li[contains(@class,'msgfirst')]//p[contains(text(),'{message}')]")).Displayed;
+            new TextElement(By.XPath($"//li[contains(@class,'msgfirst')]//p[contains(text(),'{message}')]")).IsDisplayed();
     }
 }

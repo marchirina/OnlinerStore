@@ -9,8 +9,8 @@ namespace OnlinerStore
 	public static class Browser
 	{
         private static IWebDriver _driver;
-        public static TimeSpan DefaultPollingInterval = TimeSpan.FromMilliseconds(Convert.ToDouble
-            (ConfigurationManager.AppSetting["POLLINGINTERVAL"]));
+        public static TimeSpan DefaultPollingInterval = TimeSpan.FromMilliseconds
+            (Convert.ToDouble(ConfigurationManager.AppSetting["POLLINGINTERVAL"]));
         public static TimeSpan Timeout = TimeSpan.FromSeconds(Convert.ToDouble(ConfigurationManager.AppSetting["TIMEOUT"]));
 
         public static IWebDriver Driver
@@ -18,32 +18,26 @@ namespace OnlinerStore
             get
             {
                 if (_driver == null)
-                    throw new NullReferenceException(
-                        "The WebDriver browser instance was not initialized. You should first call the method InitializeBrowser.");
+                {
+                    _driver = InitializeBrowser();
+                }
                 return _driver;
             }
             private set { _driver = value; }
         }
 
-        public static void InitializeBrowser(string browserName)
+        public static IWebDriver InitializeBrowser(string browserName= "Chrome")
         {
             switch (browserName)
             {
                 case "Firefox":
-                    if (_driver == null)
-                    {
-                        _driver = new FirefoxDriver();
-                    }
-
-                    break;
-
+                    return new FirefoxDriver();
+                    
                 case "Chrome":
-                    if (_driver == null)
-                    {
-                        _driver = new ChromeDriver();
-                    }
+                    return new ChromeDriver();
 
-                    break;
+                default:
+                    return new ChromeDriver();
             }
         }
 
@@ -69,15 +63,19 @@ namespace OnlinerStore
             return javaScriptExecutor.ExecuteScript(javaScript, args);
         }
 
-        public static WebDriverWait Wait(TimeSpan timeout = default, TimeSpan pollingInterval = default)
+        public static WebDriverWait Wait(TimeSpan timeout = default, TimeSpan pollingInterval = default, Type[] exceptionTypes = null)
         {
             timeout = timeout.Ticks == 0 ? Timeout : timeout;
             pollingInterval = pollingInterval.Ticks == 0 ? DefaultPollingInterval : pollingInterval;
 
-            return new WebDriverWait(_driver, timeout)
+            var wait = new WebDriverWait(_driver, timeout)
             {
                 PollingInterval = pollingInterval
             };
+
+            wait.IgnoreExceptionTypes(exceptionTypes ?? new[] { typeof(StaleElementReferenceException) });
+
+            return wait;
         }
 
         public static void CloseDriver()
@@ -85,6 +83,5 @@ namespace OnlinerStore
             Driver.Quit();
             Driver = null;
         }
-	}
+    }
 }
-

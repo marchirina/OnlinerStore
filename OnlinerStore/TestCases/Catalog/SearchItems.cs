@@ -10,8 +10,7 @@ namespace OnlinerStore.TestCases.Catalog
         {
             Pages.Main.SearchItem("Наушники Apple Airpods Pro 2");
             Popups.Search.OpenItemPage("Наушники Apple AirPods Pro 2");
-            Pages.Item.IsItemHeaderDisplayed();
+            Assert.IsTrue(Pages.Item.IsItemHeaderDisplayed);
         }
     }
 }
-

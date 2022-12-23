@@ -9,9 +9,8 @@ namespace OnlinerStore.TestCases.Forum
         {
             Pages.Main.OpenForumPage();
             Pages.Forum.OpenForumTheadPage("Потерянные/найденные домашние животные.");
-            Pages.Thread.IsThreadTitleDisplayed("Потерянные/найденные домашние животные.");
-            Pages.Thread.IsPinnedMessageDisplayed("ссылка на международную базу чипированных животных");
+            Assert.IsTrue(Pages.Thread.IsThreadTitleDisplayed("Потерянные/найденные домашние животные."));
+            Assert.IsTrue(Pages.Thread.IsPinnedMessageDisplayed("ссылка на международную базу чипированных животных"));
         }
     }
 }
-
