@@ -7,6 +7,7 @@ namespace OnlinerStore.TestCases
         [SetUp]
         public void SetUpTest()
         {
+            Browser.InitializeBrowser();
             Browser.OpenFullScreen();
             Browser.OpenApplication(ConfigurationManager.AppSetting["URL"]);
             Browser.Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(8);

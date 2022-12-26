@@ -2,6 +2,8 @@
 
 namespace OnlinerStore.TestCases.News
 {
+    [TestFixture]
+    [Parallelizable(ParallelScope.All)]
     public class ReadNews : BaseTest
     {
         [Test]

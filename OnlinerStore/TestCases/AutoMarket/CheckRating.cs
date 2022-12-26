@@ -2,7 +2,9 @@
 
 namespace OnlinerStore.TestCases.AutoMarket
 {
-	public class CheckRating : BaseTest
+    [TestFixture]
+    [Parallelizable(ParallelScope.All)]
+    public class CheckRating : BaseTest
     {
         [Test]
         public void CheckToyotaRAV4Rating()

@@ -2,7 +2,9 @@
 
 namespace OnlinerStore.TestCases.Forum
 {
-	public class ReadThreads : BaseTest
+    [TestFixture]
+    [Parallelizable(ParallelScope.All)]
+    public class ReadThreads : BaseTest
     {
         [Test]
         public void ReadLostPetsThread()

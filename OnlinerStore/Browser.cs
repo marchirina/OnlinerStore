@@ -1,4 +1,5 @@
-﻿using OnlinerStore.Configurations;
+﻿using System.Collections.Concurrent;
+using OnlinerStore.Configurations;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
@@ -8,36 +9,45 @@ namespace OnlinerStore
 {
 	public static class Browser
 	{
-        private static IWebDriver _driver;
-        public static TimeSpan DefaultPollingInterval = TimeSpan.FromMilliseconds
-            (Convert.ToDouble(ConfigurationManager.AppSetting["POLLINGINTERVAL"]));
-        public static TimeSpan Timeout = TimeSpan.FromSeconds(Convert.ToDouble(ConfigurationManager.AppSetting["TIMEOUT"]));
+        private static ConcurrentDictionary<string, IWebDriver> Drivers = new ConcurrentDictionary<string, IWebDriver>();
+        public static TimeSpan DefaultPollingInterval = TimeSpan.FromMilliseconds(TestSettings.PollingInterval);
+        public static TimeSpan Timeout = TimeSpan.FromSeconds(TestSettings.Timeout);
 
         public static IWebDriver Driver
         {
             get
             {
-                if (_driver == null)
-                {
-                    _driver = InitializeBrowser();
-                }
-                return _driver;
+                return Drivers.First(pair => pair.Key == TestContext.CurrentContext.Test.ClassName).Value;
             }
-            private set { _driver = value; }
+            set => Drivers.TryAdd(TestContext.CurrentContext.Test.ClassName, value);
         }
 
-        public static IWebDriver InitializeBrowser(string browserName= "Chrome")
+        public static void InitializeBrowser()
         {
-            switch (browserName)
+            switch (TestSettings.Browser)
             {
                 case "Firefox":
-                    return new FirefoxDriver();
-                    
+                    var firefoxOptions = new FirefoxOptions();
+                    if (Boolean.Parse(TestSettings.IsHeadlessMode))
+                    {
+                        firefoxOptions.AddArgument("--headless");
+                    }
+                    var firefoxDriver = new FirefoxDriver(firefoxOptions);
+                    Driver = firefoxDriver;
+                    break;
+
                 case "Chrome":
-                    return new ChromeDriver();
+                    var chromeOptions = new ChromeOptions();
+                    if (Boolean.Parse(TestSettings.IsHeadlessMode))
+                    {
+                        chromeOptions.AddArgument("--headless");
+                    }
+                    var chromeDriver = new ChromeDriver(chromeOptions);
+                    Driver = chromeDriver;
+                    break;
 
                 default:
-                    return new ChromeDriver();
+                    throw new ArgumentException("Browser is not initialized!");
             }
         }
 
@@ -68,7 +78,7 @@ namespace OnlinerStore
             timeout = timeout.Ticks == 0 ? Timeout : timeout;
             pollingInterval = pollingInterval.Ticks == 0 ? DefaultPollingInterval : pollingInterval;
 
-            var wait = new WebDriverWait(_driver, timeout)
+            var wait = new WebDriverWait(Driver, timeout)
             {
                 PollingInterval = pollingInterval
             };
@@ -80,8 +90,9 @@ namespace OnlinerStore
 
         public static void CloseDriver()
         {
+            Driver.Close();
             Driver.Quit();
-            Driver = null;
+            Driver.Dispose();
         }
     }
 }

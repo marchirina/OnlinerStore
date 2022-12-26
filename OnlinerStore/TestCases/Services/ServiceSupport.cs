@@ -2,7 +2,9 @@
 
 namespace OnlinerStore.TestCases.Services
 {
-	public class ServiceSupport : BaseTest
+    [TestFixture]
+    [Parallelizable(ParallelScope.All)]
+    public class ServiceSupport : BaseTest
     {
         [Test]
         public void FindAnswerHowToPlaceTheOrder()

@@ -46,6 +46,7 @@
     <None Remove="TestCases\Services\" />
     <None Remove="TestCases\AutoMarket\" />
     <None Remove="log4net" />
+    <None Remove="Properties\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="PageObjects\" />
@@ -58,6 +59,7 @@
     <Folder Include="TestCases\Forum\" />
     <Folder Include="TestCases\Services\" />
     <Folder Include="TestCases\AutoMarket\" />
+    <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Configurations\testsettings.json">

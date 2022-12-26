@@ -3,7 +3,9 @@ using OnlinerStore.PageObjects.Popups;
 
 namespace OnlinerStore.TestCases.Catalog
 {
-	public class SearchItems:BaseTest
+    [TestFixture]
+    [Parallelizable(ParallelScope.All)]
+    public class SearchItems:BaseTest
 	{
         [Test]
         public void SearchAirpods()

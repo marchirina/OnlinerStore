@@ -3,6 +3,8 @@ using OnlinerStore.PageObjects.Popups;
 
 namespace OnlinerStore.TestCases.Catalog
 {
+    [TestFixture]
+    [Parallelizable(ParallelScope.All)]
     public class CompareItems : BaseTest
     {
         [Test]
